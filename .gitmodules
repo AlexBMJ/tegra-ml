@@ -1,0 +1,16 @@
+[submodule "poky"]
+	path = poky
+	url = git://git.yoctoproject.org/poky
+	branch = scarthgap
+[submodule "meta-openembedded"]
+	path = meta-openembedded
+	url = git://git.openembedded.org/meta-openembedded
+	branch = scarthgap
+[submodule "meta-tegra"]
+	path = meta-tegra
+	url = https://github.com/OE4T/meta-tegra.git
+	branch = scarthgap
+[submodule "meta-tegra-community"]
+	path = meta-tegra-community
+	url = https://github.com/OE4T/meta-tegra-community.git
+	branch = scarthgap
