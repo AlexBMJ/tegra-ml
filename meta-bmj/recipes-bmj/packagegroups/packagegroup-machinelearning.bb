@@ -12,7 +12,7 @@ RDEPENDS:${PN} = " \
     cuda-libraries-11-8 \
     cuda-driver-11-8 \
     cuda-nvcc-headers-11-8 \
-    gcc-8 \
+    gcc-for-nvcc \
     binutils \
     python3 \
     python3-dev \
