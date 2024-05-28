@@ -1,0 +1,7 @@
+### Shell environment set up for builds. ###
+
+You can now run 'bitbake <target>'
+Targets for building Tegra demo images with test applications:
+    core-image-minimal  - minimally bootable image (no demo apps, no graphics)
+    bmj-image-ml        - image with tools for machine learning
+

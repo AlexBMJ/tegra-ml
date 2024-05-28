@@ -1,0 +1,19 @@
+# Version of layers configuration, specific to
+# each defined distro in the repository.
+# Format: ${DISTRO}-<version>
+TD_BBLAYERS_CONF_VERSION = "bmj-5"
+
+BBPATH = "${TOPDIR}"
+BBFILES ?= ""
+
+BBLAYERS ?= " \
+  ##OEROOT##/poky/meta \
+  ##OEROOT##/meta-tegra \
+  ##OEROOT##/meta-openembedded/meta-oe \
+  ##OEROOT##/meta-openembedded/meta-python \
+  ##OEROOT##/meta-openembedded/meta-networking \
+  ##OEROOT##/meta-openembedded/meta-filesystems \
+  ##OEROOT##/meta-tegra-community \
+  ##OEROOT##/meta-tegra-support \
+  ##OEROOT##/meta-bmj \
+  "
