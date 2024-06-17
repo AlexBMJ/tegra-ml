@@ -13,7 +13,14 @@ RDEPENDS:${PN} = " \
     cuda-driver-11-8 \
     cuda-nvcc-headers-11-8 \
     gcc-for-nvcc \
+    gcc-for-nvcc-symlinks \
+    g++-for-nvcc \
+    g++-for-nvcc-symlinks \
+    cpp-for-nvcc \
+    cpp-for-nvcc-symlinks \
+    make \
     binutils \
+    binutils-symlinks \
     python3 \
     python3-dev \
     python3-pip \

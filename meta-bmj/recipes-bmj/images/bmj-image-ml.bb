@@ -10,5 +10,4 @@ REQUIRED_DISTRO_FEATURES = "opengl"
 
 CORE_IMAGE_BASE_INSTALL += " \
     packagegroup-machinelearning \
-    packagegroup-core-buildessential \
 "
