@@ -12,6 +12,11 @@ DEPENDS += " \
     cuda-driver-11-8 \
     cuda-compat-11-8 \
     cuda-compatibility-workarounds \
+    cuda-cccl-11-8 \
+    cuda-compiler-11-8 \
+    cuda-libraries-11-8 \
+    cuda-cudart-11-8 \
+    libcublas-11-8 \
 "
 RDEPENDS:${PN} += " \
     gcc-for-nvcc \
@@ -20,7 +25,11 @@ RDEPENDS:${PN} += " \
     cuda-driver-11-8 \
     cuda-compat-11-8 \
     cuda-compatibility-workarounds \
-    cuda-command-line-tools-11-8 \
+    cuda-cccl-11-8 \
+    cuda-compiler-11-8 \
+    cuda-libraries-11-8 \
+    cuda-cudart-11-8 \
+    libcublas-11-8 \
 "
 
 inherit cmake
@@ -30,7 +39,7 @@ SRC_URI += " \
     file://patches \
 "
 
-SRCREV = "1e6f6554aa11fa10160a5fda689e736c3c34169f"
+SRCREV = "${PV}"
 UPSTREAM_CHECK_COMMITS = "1"
 
 S = "${WORKDIR}/git"
