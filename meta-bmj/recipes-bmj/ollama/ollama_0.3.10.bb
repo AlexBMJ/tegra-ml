@@ -45,10 +45,9 @@ SRC_URI = "gitsm://${GO_IMPORT}.git;nobranch=1;protocol=https"
 SRCREV = "v${PV}"
 UPSTREAM_CHECK_COMMITS = "1"
 
-# SRC_URI += " \
-#     file://disable-git.patch \
-#     file://disable-lib-check.patch \
-# "
+SRC_URI += " \
+    file://0001-disable-git.patch \
+"
 
 export CGO_ENABLED = "1"
 
