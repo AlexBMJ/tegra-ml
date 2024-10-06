@@ -8,10 +8,23 @@ else
     exit 1
 fi
 
+declare -a ARGS
+for var in "$@"; do
+    ARGS[${#ARGS[@]}]="$var"
+    shift
+done
+
 TOP_DIR=$(dirname $THIS_SCRIPT)
 
 DISTRO=bmj
 BITBAKEDIR="$TOP_DIR/poky/bitbake"
 export DISTRO BITBAKEDIR
+
 . $TOP_DIR/oe-init-build-env
-bash
+
+if [ -z "${ARGS[0]}" ]; then
+    bash
+    exit 0
+fi
+
+${ARGS[@]}
