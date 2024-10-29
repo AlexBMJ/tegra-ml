@@ -1,11 +1,12 @@
 #!/bin/bash
 if [ -n "$BASH_SOURCE" ]; then
-    THIS_SCRIPT=$BASH_SOURCE
+    THIS_SCRIPT="$BASH_SOURCE"
 elif [ -n "$ZSH_NAME" ]; then
-    THIS_SCRIPT=$0
-else
-    echo "Error: Unable to determine the script path" >&2
-    exit 1
+    THIS_SCRIPT="$0"
+fi
+
+if [ "$THIS_SCRIPT" != "$0" ]; then
+    SOURCING=true
 fi
 
 declare -a ARGS
@@ -15,16 +16,32 @@ for var in "$@"; do
 done
 
 TOP_DIR=$(dirname $THIS_SCRIPT)
+TOP_DIR=$(readlink -f "$TOP_DIR")
+POKYDIR="$TOP_DIR/poky"
+BITBAKEDIR="$POKYDIR/bitbake"
+. $TOP_DIR/.templateconf
+export BITBAKEDIR TEMPLATECONF
 
-DISTRO=bmj
-BITBAKEDIR="$TOP_DIR/poky/bitbake"
-export DISTRO BITBAKEDIR
+. $POKYDIR/oe-init-build-env
 
-. $TOP_DIR/oe-init-build-env
+if [ "$SOURCING" != true ]; then
+    if [ "${ARGS[0]}" == "-h" ] || [ "${ARGS[0]}" == "--help" ]; then
+        printf "Usage: $0 -s [command]\n"
+        exit 0
+    fi
 
-if [ -z "${ARGS[0]}" ]; then
-    bash
-    exit 0
+    declare -a COMMAND
+    for i in "${!ARGS[@]}"; do
+        if [[ "${ARGS[$i]}" = "-s" ]]; then
+            COMMAND="${ARGS[@]:$i+1}"
+        fi
+    done
+
+    if [ -z "${COMMAND[0]}" ]; then
+        bash
+        exit 0
+    fi
+    printf "Running command: ${COMMAND[@]}\n"
+    ${COMMAND[@]}
 fi
 
-${ARGS[@]}

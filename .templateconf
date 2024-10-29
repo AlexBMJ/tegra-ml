@@ -1,1 +1,9 @@
-TEMPLATECONF=${TEMPLATECONF:-meta-bmj/conf/templates/$DISTRO}
+if [ -n "$BASH_SOURCE" ]; then
+    SCRIPT="$BASH_SOURCE"
+elif [ -n "$ZSH_NAME" ]; then
+    SCRIPT="$0"
+fi
+DIR=$(dirname $SCRIPT)
+ABS_DIR=$(readlink -f "$DIR")
+
+TEMPLATECONF=${TEMPLATECONF:-$ABS_DIR/meta-bmj/conf/templates/$DISTRO}
