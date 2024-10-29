@@ -6,14 +6,16 @@ TD_BBLAYERS_CONF_VERSION = "bmj-5"
 BBPATH = "${TOPDIR}"
 BBFILES ?= ""
 
+BSPDIR := "${@os.path.abspath(os.path.join("${TOPDIR}", os.pardir))}"
+
 BBLAYERS ?= " \
-  ##OEROOT##/poky/meta \
-  ##OEROOT##/meta-tegra \
-  ##OEROOT##/meta-openembedded/meta-oe \
-  ##OEROOT##/meta-openembedded/meta-python \
-  ##OEROOT##/meta-openembedded/meta-networking \
-  ##OEROOT##/meta-openembedded/meta-filesystems \
-  ##OEROOT##/meta-tegra-community \
-  ##OEROOT##/meta-tegra-support \
-  ##OEROOT##/meta-bmj \
+  ${BSPDIR}/poky/meta \
+  ${BSPDIR}/meta-tegra \
+  ${BSPDIR}/meta-openembedded/meta-oe \
+  ${BSPDIR}/meta-openembedded/meta-python \
+  ${BSPDIR}/meta-openembedded/meta-networking \
+  ${BSPDIR}/meta-openembedded/meta-filesystems \
+  ${BSPDIR}/meta-tegra-community \
+  ${BSPDIR}/meta-tegra-support \
+  ${BSPDIR}/meta-bmj \
   "
