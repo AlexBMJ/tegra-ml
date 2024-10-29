@@ -6,4 +6,4 @@ fi
 DIR=$(dirname $SCRIPT)
 ABS_DIR=$(readlink -f "$DIR")
 
-TEMPLATECONF=${TEMPLATECONF:-$ABS_DIR/meta-bmj/conf/templates/$DISTRO}
+TEMPLATECONF=${TEMPLATECONF:-$ABS_DIR/meta-bmj/conf/templates/bmj/}
