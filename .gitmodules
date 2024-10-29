@@ -9,8 +9,8 @@
 [submodule "meta-tegra"]
 	path = meta-tegra
 	url = https://github.com/OE4T/meta-tegra.git
-	branch = scarthgap
+	branch = scarthgap-l4t-r35.x
 [submodule "meta-tegra-community"]
 	path = meta-tegra-community
 	url = https://github.com/OE4T/meta-tegra-community.git
-	branch = scarthgap
+	branch = scarthgap-l4t-r35.x
