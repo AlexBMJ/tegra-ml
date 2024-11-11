@@ -1,0 +1,13 @@
+"
+export OLLAMA_SKIP_CPU_GENERATE="1"
+export CGO_ENABLED="1"
+export CMAKE_CUDA_ARCHITECTURES="72;87"
+
+export PATH="$PATH:/usr/local/cuda/bin"
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/local/cuda/lib:/usr/local/cuda/lib64:/usr/local/cuda/compat:/usr/local/cuda/include"
+export CPLUS_INCLUDE_PATH="/usr/include/cuda-compat-workarounds:/usr/include/c++/10.3.0:/usr/include/c++/10.3.0/aarch64-oe4t-linux:$CPLUS_INCLUDE_PATH"
+
+#go env -w GOPROXY=https://proxy.golang.org,direct
+go env -w GOSUMDB=sum.golang.org
+go env -w GO111MODULE=auto
+"
