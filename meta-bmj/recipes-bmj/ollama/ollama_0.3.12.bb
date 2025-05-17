@@ -13,26 +13,30 @@ LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=a8abe7311c869aba169d640cf367a4af"
 
 DEPENDS += " \
-    llama.cpp \
-    git \
-    bash \
-    gcc-for-nvcc \
-    cuda-nvcc-11-8 \
-    cuda-nvcc-headers-11-8 \
+    cmake \
+    cuda-nvcc-11-8-dev \
+    cuda-nvcc-headers-11-8-dev \
+    cuda-compiler-11-8-dev \
+    cuda-libraries-11-8-dev \
+    cuda-cccl-11-8-dev \
+    cuda-cudart-11-8-dev \
+    libcudla-11-8-dev \
     cuda-driver-11-8 \
     cuda-compat-11-8 \
     cuda-compatibility-workarounds \
+    gcc-for-nvcc-dev \
+    g++-for-nvcc \
+    cpp-for-nvcc \
 "
-RDEPENDS:${PN} += " \
-    git \
+
+RDEPENDS:${PN} = " \
     bash \
-    gcc-for-nvcc \
-    cuda-nvcc-11-8 \
-    cuda-nvcc-headers-11-8 \
+    cuda-libraries-11-8 \
+    cuda-cudart-11-8 \
+    libcudla-11-8-dev \
     cuda-driver-11-8 \
     cuda-compat-11-8 \
     cuda-compatibility-workarounds \
-    cuda-command-line-tools-11-8 \
 "
 
 inherit go go-mod
