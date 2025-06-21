@@ -10,6 +10,7 @@ RDEPENDS:${PN} = " \
     cuda-libraries-11-8-dev \
     cuda-cccl-11-8-dev \
     cuda-cudart-11-8-dev \
+    libcublas-11-8 \
     libcudla-11-8-dev \
     cuda-driver-11-8 \
     cuda-compat-11-8 \

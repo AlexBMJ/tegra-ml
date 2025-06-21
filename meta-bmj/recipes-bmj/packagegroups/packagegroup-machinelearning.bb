@@ -16,6 +16,7 @@ RDEPENDS:${PN} = " \
     cuda-compiler-11-8 \
     cuda-libraries-11-8 \
     cuda-cudart-11-8 \
+    libcublas-11-8 \
     libcudla-11-8 \
     gcc-for-nvcc \
     gcc-for-nvcc-symlinks \
