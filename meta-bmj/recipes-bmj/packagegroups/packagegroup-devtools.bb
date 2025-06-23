@@ -17,5 +17,7 @@ RDEPENDS:${PN}:append = " \
     tmux \
     vim \
     less \
+    htop \
+    btop \
     systemd-analyze \
 "

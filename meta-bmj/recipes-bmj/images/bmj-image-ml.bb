@@ -11,4 +11,5 @@ REQUIRED_DISTRO_FEATURES = "opengl"
 CORE_IMAGE_BASE_INSTALL += " \
     packagegroup-cuda \
     packagegroup-devtools \
+    nv-tegra-release \
 "
