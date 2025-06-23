@@ -33,7 +33,7 @@ SDKPATHINSTALL = "/opt/${DISTRO}/${SDK_VERSION}"
 
 TCLIBCAPPEND = ""
 
-PACKAGE_CLASSES ?= "package_rpm"
+PACKAGE_CLASSES ?= "package_deb"
 
 SANITY_TESTED_DISTROS ?= " \
             ubuntu-18.04 \n \

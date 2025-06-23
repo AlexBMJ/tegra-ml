@@ -12,7 +12,7 @@ RDEPENDS:${PN}:append = " \
     python3 \
     python3-dev \
     python3-pip \
-    rpm \
+    apt \
     git \
     tmux \
     vim \
