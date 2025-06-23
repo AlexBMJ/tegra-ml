@@ -1,7 +1,6 @@
 DISTRO = "bmj"
 DISTRO_NAME = "BMJ Tegra ML distro"
-DISTRO_VERSION_BASE = "1.0.0"
-DISTRO_VERSION = "${DISTRO_VERSION_BASE}+snapshot-${METADATA_REVISION}"
+DISTRO_VERSION = "1.0.0"
 DISTRO_CODENAME = "master"
 SDK_VENDOR = "-tdsdk"
 SDK_VERSION := "${@'${DISTRO_VERSION}'.replace('snapshot-${METADATA_REVISION}','snapshot')}"
