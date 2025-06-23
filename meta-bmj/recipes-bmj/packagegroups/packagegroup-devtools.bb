@@ -12,6 +12,7 @@ RDEPENDS:${PN}:append = " \
     python3 \
     python3-dev \
     python3-pip \
+    python3-jetson-stats \
     apt \
     git \
     tmux \
