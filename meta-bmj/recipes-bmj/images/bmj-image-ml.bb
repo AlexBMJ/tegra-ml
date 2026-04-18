@@ -9,6 +9,7 @@ inherit features_check
 REQUIRED_DISTRO_FEATURES = "opengl"
 
 CORE_IMAGE_BASE_INSTALL += " \
+    packagegroup-core \
     packagegroup-cuda \
     packagegroup-devtools \
     nv-tegra-release \

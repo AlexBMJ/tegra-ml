@@ -4,6 +4,7 @@ LICENSE = "MIT"
 inherit packagegroup
 
 RDEPENDS:${PN} = " \
+    cuda-driver-11-8 \
     cuda-nvcc-11-8-dev \
     cuda-nvcc-headers-11-8-dev \
     cuda-compiler-11-8-dev \
