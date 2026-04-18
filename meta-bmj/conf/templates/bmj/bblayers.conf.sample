@@ -17,5 +17,6 @@ BBLAYERS ?= " \
   ${BSPDIR}/meta-openembedded/meta-filesystems \
   ${BSPDIR}/meta-tegra-community \
   ${BSPDIR}/meta-tegra-support \
+  ${BSPDIR}/meta-lts-mixins \
   ${BSPDIR}/meta-bmj \
   "
