@@ -1,0 +1,58 @@
+From: Alexander Jacobsen <dev@alexbmj.com>
+Date: Thu, 23 Apr 2026 23:00:00 +0000
+Subject: [PATCH] arm64: tegra: t194: disable tegra-carveouts to reclaim VPR
+ RAM
+
+On Jetson Xavier NX (and other t194 CVM platforms) the
+`tegra-carveouts` node is enabled in `tegra194-soc-cvm.dtsi`
+(`status = "okay"`) and references `&vpr` via its `memory-region`. This
+causes the nvmap driver to register a 688 MiB VPR heap at boot:
+
+    misc nvmap: created heap vpr base 0x00000000ce000000 size (688128KiB)
+
+The 688 MiB is permanently unavailable to the kernel page allocator,
+even on systems that never use HDCP-protected video, camera VPR
+buffers, or any other VPR-aware path. On a Xavier NX 8 GB headless ML
+deployment this is the dominant cause of "missing" RAM (~1.16 GiB
+between the 8 GiB DRAM and `MemTotal`).
+
+Disable the parent `tegra-carveouts` node so nvmap does not create the
+VPR heap. Combined with `enable_vpr_resize = 1` in the MB1 BCT (so MB2
+does not statically reserve the full VPR window), this reclaims the
+full 688 MiB.
+
+This change is only safe on systems that do NOT require:
+  - HDCP / Widevine / protected video playback
+  - VPR-aware camera capture (CSI ISP using VPR-mapped buffers)
+
+For BMJ headless ML deployments on Xavier NX 8GB, neither is required.
+
+Reverting:
+  Set `status = "okay"` on the `tegra-carveouts` node in
+  tegra194-soc-cvm.dtsi (or revert this patch).
+
+References:
+  https://forums.developer.nvidia.com/t/jp-5-0-2-missing-1gb-volatile-memory/229214/36
+  https://forums.developer.nvidia.com/t/cudamalloc-failing-with-700mb-free-ram-on-tx2-nx-4gb-vpr-carveout-workaround/298673
+
+Signed-off-by: Alexander Jacobsen <dev@alexbmj.com>
+---
+ nvidia/soc/t19x/kernel-dts/tegra194-soc/tegra194-soc-cvm.dtsi | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/nvidia/soc/t19x/kernel-dts/tegra194-soc/tegra194-soc-cvm.dtsi b/nvidia/soc/t19x/kernel-dts/tegra194-soc/tegra194-soc-cvm.dtsi
+--- a/nvidia/soc/t19x/kernel-dts/tegra194-soc/tegra194-soc-cvm.dtsi
++++ b/nvidia/soc/t19x/kernel-dts/tegra194-soc/tegra194-soc-cvm.dtsi
+@@ -69,8 +69,11 @@
+ 		status = "okay";
+ 	};
+ 
++	/* BMJ: disable tegra-carveouts to drop the 688 MiB VPR nvmap heap.
++	 * Safe on headless systems with no HDCP and no VPR-using camera path.
++	 */
+ 	tegra-carveouts {
+-		status = "okay";
++		status = "disabled";
+ 	};
+ 
+ 	mc {
