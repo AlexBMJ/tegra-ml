@@ -1,0 +1,16 @@
+[Unit]
+Description=Ollama Service
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+ExecStart=/usr/bin/ollama serve
+User=ollama
+Group=ollama
+Restart=always
+RestartSec=3
+Environment="OLLAMA_MODELS=/var/lib/ollama/models"
+StateDirectory=ollama
+
+[Install]
+WantedBy=multi-user.target
