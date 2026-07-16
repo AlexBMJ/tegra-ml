@@ -5,6 +5,4 @@ inherit packagegroup
 
 RDEPENDS:${PN} = " \
     cuda-driver-11-8 \
-    g++-for-nvcc \
-    cpp-for-nvcc \
 "

@@ -10,7 +10,7 @@ REQUIRED_DISTRO_FEATURES = "opengl"
 
 CORE_IMAGE_BASE_INSTALL += " \
     packagegroup-core \
-    packagegroup-cuda-dev \
-    packagegroup-devtools \
+    packagegroup-cuda \
     nv-tegra-release \
+    ollama \
 "
