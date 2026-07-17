@@ -1,0 +1,55 @@
+Subject: [PATCH] cmake: cross-compile support for the nested llama-server build
+
+ollama_add_llama_server_build() only forwards GGML_*/LLAMA_* cache
+variables to the nested configure, so pass the toolchain file (which for
+OE also carries the CUDA cross setup) and FetchContent offline mode
+through as well. Drop install(TARGETS ggml-cuda RUNTIME_DEPENDENCIES):
+rejected by CMake when cross-compiling, the module is already installed
+by the install(CODE) glob, and the CUDA runtime comes from RDEPENDS.
+
+Upstream-Status: Inappropriate [oe cross-compile packaging]
+---
+diff --git a/src/github.com/ollama/ollama/cmake/local.cmake b/src/github.com/ollama/ollama/cmake/local.cmake
+index 67de4e3..1383fe7 100644
+--- a/src/github.com/ollama/ollama/cmake/local.cmake
++++ b/src/github.com/ollama/ollama/cmake/local.cmake
+@@ -388,6 +388,13 @@ function(ollama_add_llama_server_build name)
+         ${_llama_cache_args}
+     )
+ 
++    # Forward the cross toolchain and FetchContent offline mode to the nested configure.
++    foreach(_arg IN ITEMS
++            CMAKE_TOOLCHAIN_FILE
++            FETCHCONTENT_FULLY_DISCONNECTED)
++        ollama_append_cache_arg_if_set(_cmake_args ${_arg})
++    endforeach()
++
+     if(APPLE)
+         if(CMAKE_OSX_ARCHITECTURES)
+             list(APPEND _cmake_args
+diff --git a/src/github.com/ollama/ollama/llama/server/CMakeLists.txt b/src/github.com/ollama/ollama/llama/server/CMakeLists.txt
+index 2c57315..69aa183 100644
+--- a/src/github.com/ollama/ollama/llama/server/CMakeLists.txt
++++ b/src/github.com/ollama/ollama/llama/server/CMakeLists.txt
+@@ -434,21 +434,6 @@ if(OLLAMA_RUNNER_DIR)
+ 
+     ollama_install_windows_runtime_dlls("${_base_dest}/${OLLAMA_RUNNER_DIR}")
+ 
+-    # Bundle GPU runtime libraries (cublas, cudart, rocblas, etc.)
+-    # These are needed at runtime by the GPU backend .so
+-    if(GGML_CUDA AND CUDAToolkit_FOUND)
+-        # Find the actual ggml-cuda target to get its runtime dependencies
+-        if(TARGET ggml-cuda)
+-            install(TARGETS ggml-cuda
+-                RUNTIME_DEPENDENCIES
+-                    DIRECTORIES ${CUDAToolkit_BIN_DIR} ${CUDAToolkit_BIN_DIR}/x64 ${CUDAToolkit_LIBRARY_DIR}
+-                    PRE_INCLUDE_REGEXES cublas cublasLt cudart
+-                    PRE_EXCLUDE_REGEXES ".*"
+-                RUNTIME DESTINATION "${_base_dest}/${OLLAMA_RUNNER_DIR}" COMPONENT llama-server
+-                LIBRARY DESTINATION "${_base_dest}/${OLLAMA_RUNNER_DIR}" COMPONENT llama-server
+-            )
+-        endif()
+-    endif()
+     if(GGML_HIP)
+         if(TARGET ggml-hip)
+             install(TARGETS ggml-hip
