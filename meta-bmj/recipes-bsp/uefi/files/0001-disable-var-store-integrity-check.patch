@@ -1,0 +1,38 @@
+From 66ab1479460204fcfe3a1a2a7a5520bcce9871bb Mon Sep 17 00:00:00 2001
+From: Alexander Jacobsen <dev@alexbmj.com>
+Date: Sun, 15 Mar 2026 23:03:31 +0000
+Subject: [PATCH] disable-var-store-integrity-check
+
+Disable the UEFI variable store integrity check and the corresponding
+boot-halting assertion. The integrity check requires a key derived from
+KEK2 hardware fuses via the OP-TEE Jetson User Key PTA. When the fuses
+are not burned, SendOpteeCmd() returns TEE_ERROR_ITEM_NOT_FOUND
+(0xFFFF0008), which triggers an ASSERT(FALSE) and halts the system.
+
+Setting both PcdVarStoreIntegritySupported and
+PcdAssertOnVarStoreIntegrityCheckFail to FALSE disables the feature
+entirely, allowing the system to boot without burned KEK2 fuses.
+
+Upstream-Status: Inappropriate [disable feature]
+Signed-off-by: Alexander Jacobsen <dev@alexbmj.com>
+---
+ Platform/NVIDIA/StandaloneMmOptee/StandaloneMmOptee.dsc.inc | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Platform/NVIDIA/StandaloneMmOptee/StandaloneMmOptee.dsc.inc b/Platform/NVIDIA/StandaloneMmOptee/StandaloneMmOptee.dsc.inc
+index 7f7b3618..cbdae5c1 100644
+--- a/Platform/NVIDIA/StandaloneMmOptee/StandaloneMmOptee.dsc.inc
++++ b/Platform/NVIDIA/StandaloneMmOptee/StandaloneMmOptee.dsc.inc
+@@ -49,8 +49,8 @@
+ [PcdsFeatureFlag]
+   gArmTokenSpaceGuid.PcdFfaEnable|TRUE
+   gNVIDIATokenSpaceGuid.PcdOpteePresent|TRUE
+-  gNVIDIATokenSpaceGuid.PcdVarStoreIntegritySupported|TRUE
+-  gNVIDIATokenSpaceGuid.PcdAssertOnVarStoreIntegrityCheckFail|TRUE
++  gNVIDIATokenSpaceGuid.PcdVarStoreIntegritySupported|FALSE
++  gNVIDIATokenSpaceGuid.PcdAssertOnVarStoreIntegrityCheckFail|FALSE
+ 
+ [PcdsPatchableInModule]
+   #
+-- 
+2.43.0
